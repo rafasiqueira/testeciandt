@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "Pokémons";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Pokémons</h2>
+
+<div class="row">
+    <div class="col-lg-3">
+        <button type="button" class="btn btn-info">Criar Pokémon</button>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-3">
+        <input type="text" class="form-control left">
+    </div>
+    <div class="col-lg-3">
+        <button type="button" class="btn btn-default left">Buscar</button>
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Imagem</th>
+            <th>Nome</th>
+            <th>Tipo</th>
+            <th>Capturado</th>
+            <th>Excluir</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td><img src="~/Content/images/007.png" style="max-height: 30px;" /></td>
+            <td>Squirtle</td>
+            <td>Água</td>
+            <td><span class="glyphicon glyphicon-unchecked" style="cursor:pointer;"></span></td>
+
+            <td><span class="glyphicon glyphicon-remove" onclick="location.href='@Url.Action("Delete", "Pokemon")'" style="cursor:pointer;"></span></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td><img src="~/Content/images/001.png" style="max-height: 30px;" /></td>
+            <td>Bulbasaur</td>
+            <td>Grama</td>
+            <td><span class="glyphicon glyphicon-check" style="cursor:pointer;"></span></td>
+
+            <td><span class="glyphicon glyphicon-remove" onclick="location.href='@Url.Action("Delete", "Pokemon")'" style="cursor:pointer;"></span></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td><img src="~/Content/images/004.png" style="max-height: 30px;" /></td>
+            <td>Charmander</td>
+            <td>Fogo</td>
+
+            <td><span class="glyphicon glyphicon-unchecked" style="cursor:pointer;"></span></td>
+            <td><span class="glyphicon glyphicon-remove" onclick="location.href='@Url.Action("Delete", "Pokemon")'" style="cursor:pointer;"></span></td>
+        </tr>
+    </tbody>
+</table>
