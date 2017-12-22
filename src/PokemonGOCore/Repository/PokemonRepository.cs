@@ -1,8 +1,10 @@
 ﻿using PokemonGOCore.Infrastructure;
 using PokemonGOCore.Model;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace PokemonGOCore.Repository
 {
@@ -13,6 +15,11 @@ namespace PokemonGOCore.Repository
         public PokemonRepository()
         {
             _Repository = UnitOfWork.Context.Set<Pokemon>();
+        }
+
+        public List<Pokemon> FindAll(Expression<Func<Pokemon, bool>> predicate)
+        {
+            return _Repository.Where(predicate).ToList();
         }
 
         public List<Pokemon> FindAll()
@@ -34,6 +41,12 @@ namespace PokemonGOCore.Repository
         public void Update(Pokemon pokemon)
         {
             UnitOfWork.Context.Entry(pokemon).State = EntityState.Modified;
+            UnitOfWork.Context.SaveChanges();
+        }
+
+        public void Insert(Pokemon pokemon)
+        {
+            _Repository.Add(pokemon);
             UnitOfWork.Context.SaveChanges();
         }
 

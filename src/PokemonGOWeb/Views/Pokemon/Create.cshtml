@@ -9,22 +9,32 @@
 <form>
     <div class="form-group">
         <label>Nome</label>
-        <input type="text" class="form-control" placeholder="Inserir o nome">
+        <input type="text" id="txtNome" class="form-control" placeholder="Inserir o nome">
     </div>
     <div class="form-group">
         <label>Imagem</label>
-        <input type="text" class="form-control" placeholder="Caminho da imagem">
+        <input type="text" id="txtCaminhoImagem" class="form-control" placeholder="Caminho da imagem">
         <small id="fileHelp" class="form-text text-muted">O caminho da imagem deve ser no padrão "~/Content/images/001.png".</small>
     </div>
   
     <div class="form-group">
         <label for="exampleSelect1">Tipo de Pokémon</label>
-        <select class="form-control" id="exampleSelect1">
-            <option>Elétrico</option>
-            <option>Grama</option>
-            <option>Fogo</option>
+        <select class="form-control" id="pokemonType">
+            @foreach (var item in Model.PokemonTypes)
+            {
+                <option value="@item.Id">@item.Description</option>
+            }
         </select>
     </div>
-    <button type="button" class="btn">Voltar</button>
-    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a class="btn btn-default" href="~/Pokemon">Voltar</a>
+    <button type="submit" id="btnSave" class="btn btn-primary">Salvar</button>
 </form>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            PokemonApp.Pages.Pokemon.Create.load();
+        });
+    </script>
+}

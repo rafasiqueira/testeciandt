@@ -8,56 +8,59 @@
 
 <div class="row">
     <div class="col-lg-3">
-        <button type="button" class="btn btn-info">Criar Pokémon</button>
+        <a href="Pokemon/Create" class="btn btn-info">Criar Pokémon</a>
     </div>
 </div>
 <br />
 <div class="row">
     <div class="col-lg-3">
-        <input type="text" class="form-control left">
+        <input type="text" id="txtQuery" class="form-control left">
     </div>
     <div class="col-lg-3">
-        <button type="button" class="btn btn-default left">Buscar</button>
+        <button type="button" id="btnBuscar" class="btn btn-default left">Buscar</button>
     </div>
 </div>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Imagem</th>
-            <th>Nome</th>
-            <th>Tipo</th>
-            <th>Capturado</th>
-            <th>Excluir</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>1</td>
-            <td><img src="~/Content/images/007.png" style="max-height: 30px;" /></td>
-            <td>Squirtle</td>
-            <td>Água</td>
-            <td><span class="glyphicon glyphicon-unchecked" style="cursor:pointer;"></span></td>
 
-            <td><span class="glyphicon glyphicon-remove" style="cursor:pointer;"></span></td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td><img src="~/Content/images/001.png" style="max-height: 30px;" /></td>
-            <td>Bulbasaur</td>
-            <td>Grama</td>
-            <td><span class="glyphicon glyphicon-check" style="cursor:pointer;"></span></td>
+<div id="pokemon-table">
+    <!-- Pokemon list will be loaded here -->
+</div>
 
-            <td><span class="glyphicon glyphicon-remove" style="cursor:pointer;"></span></td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td><img src="~/Content/images/004.png" style="max-height: 30px;" /></td>
-            <td>Charmander</td>
-            <td>Fogo</td>
+<!-- Modal de confirmação de exclusão -->
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -10px; margin-bottom: -10px;">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span>
+                </button>
+            </div>
+            <div class="modal-body no-padding">
+                <div class="callout no-margin callout-danger">
+                    <div class="text-red fa-lg">
+                        <i class="fa fa-warning"></i>
+                        <b class="modal-title">Confirmação de exclusão</b>
+                    </div>
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-xs-12 alert-content">
+                            Você realmente deseja excluir este Pokémon?<br />
+                            <i>Após realizada a exclusão, não é possível reverter este processo.</i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <a class="btn btn-danger btn-ok" id="btnConfirmaExclusao">Sim, excluir</a>
+            </div>
+        </div>
+    </div>
+</div>
 
-            <td><span class="glyphicon glyphicon-unchecked" style="cursor:pointer;"></span></td>
-            <td><span class="glyphicon glyphicon-remove" style="cursor:pointer;"></span></td>
-        </tr>
-    </tbody>
-</table>
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            PokemonApp.Pages.Pokemon.Index.load();
+        });
+    </script>
+}

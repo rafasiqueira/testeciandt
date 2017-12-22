@@ -15,5 +15,10 @@ namespace PokemonGOCore.Repository
             _Repository = UnitOfWork.Context.Set<PokemonType>();
         }
 
+        public List<PokemonType> FindAll()
+        {
+            return _Repository.ToList();
+        }
+
     }
 }

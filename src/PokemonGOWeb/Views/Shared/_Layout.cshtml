@@ -28,6 +28,36 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
+
+        <!-- Modal Alert -->
+        <div class="modal fade" id="ModalAlertDiv" tabindex="-1" role="dialog" aria-labelledby="ModalAlertDiv" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="overflow: hidden;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -10px; margin-bottom: -10px;">
+                            <span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span>
+                        </button>
+                    </div>
+                    <div class="modal-body no-padding">
+                        <div class="callout no-margin">
+                            <div class="text-red fa-lg">
+                                <i class="fa fa-warning"></i>
+                                <b class="modal-title">{{{Title}}}</b>
+                            </div>
+                            <div class="row" style="margin-top: 5px;">
+                                <div class="col-xs-12 alert-content">
+                                    {{{Content}}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="margin-top: 0 !important;">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <footer>
             <p>&copy; @DateTime.Now.Year - <img src="http://www.corpbusiness.com.br/_img/conteudo/noticia/13108/080514_102541.jpg" style="width:30px;" /></p>
         </footer>
@@ -35,6 +65,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/main.js")
     @RenderSection("scripts", required: false)
 </body>
 </html>

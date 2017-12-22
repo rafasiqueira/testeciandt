@@ -1,6 +1,7 @@
 ﻿using PokemonGOCore.Model;
 using PokemonGOCore.Service;
 using PokemonGOWeb.Models;
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -8,42 +9,117 @@ namespace PokemonGOWeb.Controllers
 {
     public class PokemonController : Controller
     {
+
+        #region Index 
+
+        [HttpGet]
         public ActionResult Index()
         {
-            var service = new PokemonService();
-            List<Pokemon> allPokemons = service.FindAll();
-
-            //ToDo: Passar o allPokemons para a view model
-            //Opcional: Criar uma view model para passar para a tela ao invés de passar a model do banco
-
             return View();
         }
 
-        public ActionResult Search(string word)
+        [HttpGet]
+        public ActionResult ListPartial(int pageSize, int page, string query = null)
+        {
+            List<Pokemon> pokemonList;
+
+            if (!string.IsNullOrEmpty(query))
+            {
+                query = query.ToLower();
+                pokemonList = new PokemonService().FindAll(x => 
+                    x.Name.ToLower().Contains(query) || 
+                    x.PokemonType.Description.ToLower().Equals(query)
+                );
+            }
+            else
+            {
+                pokemonList = new PokemonService().FindAll();
+            }
+
+            if (pokemonList != null && pokemonList.Count > 0)
+            {
+                var pageCount = (int)Math.Ceiling(((decimal)pokemonList.Count) / pageSize);
+
+                return PartialView("ListPartial", new PokemonIndexViewModel()
+                {
+                    PokemonList = pokemonList.GetRange(pageSize * (page - 1), page == pageCount ? pokemonList.Count - (pageSize * (page - 1)) : pageSize),
+                    PageSize = pageSize,
+                    Page = page,
+                    PageCount = pageCount
+                });
+            }
+            else
+            {
+                return PartialView("ListPartial", null);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ToggleCurrentHaveState(int PokemonId)
+        {
+            var pokeService = new PokemonService();
+            var CurrentPokemon = pokeService.FindById(PokemonId);
+
+            if(CurrentPokemon != null)
+            {
+                CurrentPokemon.CurrentHave = !CurrentPokemon.CurrentHave;
+                pokeService.Update(CurrentPokemon);
+
+                return new HttpStatusCodeResult(200);
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int PokemonId)
+        {
+            var pokeService = new PokemonService();
+            var CurrentPokemon = pokeService.FindById(PokemonId);
+
+            if (CurrentPokemon != null)
+            {
+                pokeService.Delete(CurrentPokemon);
+
+                return new HttpStatusCodeResult(200);
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Save(PokemonIndexViewModel pokemon)
         {
             return View("Index");
         }
 
+        #endregion
+
+        #region Create
+
+        [HttpGet]
         public ActionResult Create()
         {
-            return View();
-        }
+            var pokemonTypes = new PokemonTypeService().FindAll();
 
-        public ActionResult Delete()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Save(PokemonViewModel pokemon)
-        {
-            return View("Index");
+            return View(new PokemonCreateViewModel
+            {
+                PokemonTypes = pokemonTypes
+            });
         }
 
         [HttpPost]
-        public ActionResult Delete(int id)
+        public ActionResult Create(Pokemon pokemon)
         {
-            return View("Index");
+            new PokemonService().Insert(pokemon);
+
+            return new HttpStatusCodeResult(200);
         }
+
+        #endregion
     }
 }

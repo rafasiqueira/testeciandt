@@ -1,6 +1,7 @@
 ﻿using PokemonGOCore.Model;
 using PokemonGOCore.Repository;
 using System.Collections.Generic;
+using System;
 
 namespace PokemonGOCore.Service
 {
@@ -13,5 +14,9 @@ namespace PokemonGOCore.Service
             _Repository = new PokemonTypeRepository();
         }
 
+        public List<PokemonType> FindAll()
+        {
+            return _Repository.FindAll();
+        }
     }
 }

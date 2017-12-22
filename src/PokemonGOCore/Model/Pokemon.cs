@@ -17,6 +17,6 @@ namespace PokemonGOCore.Model
         public bool CurrentHave { get; set; }
 
         public int PokemonTypeId { get; set; }
-        public PokemonType PokemonType { get; set; }
+        public virtual PokemonType PokemonType { get; set; }
     }
 }
